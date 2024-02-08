@@ -1,7 +1,7 @@
 use chrono::prelude::*;
 use chrono::Utc;
 
-struct MonthlySpend {
+pub struct MonthlySpend {
     name: String,
     date: DateTime<Utc>,
     amount: f32,
