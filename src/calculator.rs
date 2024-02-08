@@ -7,22 +7,17 @@ struct MonthlySpend {
     amount: f32,
 }
 
-fn calculate_balance(
+pub fn calculate_balance(
     current_date: DateTime<Utc>,
     current_balance: f32,
     spend: f32,
     monthly_spends: Box<[MonthlySpend]>,
 ) -> f32 {
-    let mut new_balance = current_balance - spend;
-    let spends_to_apply: Vec<_> = monthly_spends
+    monthly_spends
         .iter()
         .filter(|spend| spend.date <= current_date)
         .map(|bill| bill.amount)
-        .collect();
-    for spend in spends_to_apply {
-        new_balance -= spend
-    }
-    return new_balance;
+        .fold(current_balance - spend, |acc, x| acc - x)
 }
 
 #[cfg(test)]
