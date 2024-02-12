@@ -37,7 +37,7 @@ jobs:
           aws-region: eu-west-2
       - name: Deploy Terraform
         run: |
-          cd terraform && terraform plan -out="plan" && terraform apply "plan"
+          cd terraform && terraform init && terraform plan -out="plan" && terraform apply "plan"
       - name: Release lambda
         run: |
           pip install cargo-lambda
