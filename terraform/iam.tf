@@ -35,7 +35,8 @@ resource "aws_iam_policy" "apply_policy" {
         "Action" : [
           "s3:*",
           "lambda:*",
-          "dynamodb:*"
+          "dynamodb:*",
+          "iam:*"
         ],
         "Resource" : "*"
       }
