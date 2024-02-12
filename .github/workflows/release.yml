@@ -35,6 +35,9 @@ jobs:
           role-to-assume: arn:aws:iam::${{secrets.AWS_ACCOUNT_ID}}:role/budget_buddy_terraform_deploy_role
           role-session-name: budget_buddy_terraform_deploy
           aws-region: eu-west-2
+      - name: Deploy Terraform
+        run: /
+          cd terraform && terraform plan -out="plan" && terraform apply "plan"
       - name: Release lambda
         run: |
           pip install cargo-lambda
@@ -42,5 +45,3 @@ jobs:
           cargo lambda deploy budget_buddy
         env:
           AWS_DEFAULT_REGION: eu-west-2
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
