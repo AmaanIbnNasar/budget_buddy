@@ -24,7 +24,7 @@ pub fn calculate_new_balance(post_request: PostRequest) -> BalanceResponse {
 
     let new_balance = monthly_spends
         .iter()
-        .filter(|spend| spend.date <= current_date)
+        .filter(|spend| spend.date >= current_date)
         .map(|bill| {
             spends_applied.push(bill.name.to_string());
             bill.amount
@@ -61,19 +61,19 @@ mod tests {
     fn test_calculate_balance_with_monthly_spends() {
         let balance = 100.0;
         let expected_balance = BalanceResponse {
-            new_balance: 80.0,
-            spends_applied: vec!["Phone Bill".to_string()],
+            new_balance: 70.0,
+            spends_applied: vec!["Should be applied".to_string()],
         };
         let fixed_time = Utc.with_ymd_and_hms(2024, 3, 15, 0, 0, 0).unwrap();
         let phone_bill = MonthlySpend {
-            name: String::from("Phone Bill"),
+            name: String::from("Should not be applied"),
             date: Utc.with_ymd_and_hms(2024, 3, 2, 0, 0, 0).unwrap(),
             amount: 10.0,
         };
         let rent_bill = MonthlySpend {
-            name: String::from("Rent"),
+            name: String::from("Should be applied"),
             date: Utc.with_ymd_and_hms(2024, 3, 17, 0, 0, 0).unwrap(),
-            amount: 10.0,
+            amount: 20.0,
         };
         let bills = Box::new([phone_bill, rent_bill]);
         let post_request = PostRequest {
