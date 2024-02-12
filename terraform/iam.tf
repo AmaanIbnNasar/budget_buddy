@@ -50,14 +50,6 @@ resource "aws_iam_role_policy_attachment" "terraform_apply_policy_attachment" {
   role       = aws_iam_role.terraform_apply_role.name
 }
 
-resource "aws_iam_user" "lambda-service-user" {
-  name = "lambda-service-user"
-}
-
-resource "aws_iam_access_key" "lambda-service-user" {
-  user = aws_iam_user.lambda-service-user.name
-}
-
 resource "aws_iam_policy" "lambda-service-policy" {
   name = "lambda-service-policy"
   policy = jsonencode({
@@ -81,12 +73,6 @@ resource "aws_iam_policy" "lambda-service-policy" {
     ]
   })
 }
-
-resource "aws_iam_user_policy_attachment" "lambda-service-user-policy-attachment" {
-  user       = aws_iam_user.lambda-service-user.name
-  policy_arn = aws_iam_policy.lambda-service-policy.arn
-}
-
 resource "aws_iam_role_policy_attachment" "update_lambda_policy_attachment" {
   role       = aws_iam_role.terraform_apply_role.name
   policy_arn = aws_iam_policy.lambda-service-policy.arn
