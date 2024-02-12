@@ -77,12 +77,3 @@ resource "aws_iam_role_policy_attachment" "update_lambda_policy_attachment" {
   role       = aws_iam_role.terraform_apply_role.name
   policy_arn = aws_iam_policy.lambda-service-policy.arn
 }
-
-output "aws_access_key_id" {
-  value = aws_iam_access_key.lambda-service-user.id
-}
-
-output "aws_secret_access_key" {
-  value     = aws_iam_access_key.lambda-service-user.secret
-  sensitive = true
-}
