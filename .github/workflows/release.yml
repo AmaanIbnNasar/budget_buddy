@@ -36,7 +36,7 @@ jobs:
           role-session-name: budget_buddy_terraform_deploy
           aws-region: eu-west-2
       - name: Deploy Terraform
-        run: /
+        run: |
           cd terraform && terraform plan -out="plan" && terraform apply "plan"
       - name: Release lambda
         run: |
